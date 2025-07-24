@@ -67,7 +67,7 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
             }
             rows.append(row)
         df = pd.DataFrame(rows)
-        df.to_csv(eventfile, index=False)
+        df.to_csv('deposit_logs.csv', index=False)
     else:
         for block_num in range(start_block,end_block+1):
             event_filter = contract.events.Deposit.create_filter(from_block=block_num,to_block=block_num,argument_filters=arg_filter)
@@ -87,4 +87,5 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
                 rows.append(row)
             if rows:
                 df = pd.DataFrame(rows)
-                write_header = not Path(eventfile).exists()
+                # write_header = not Path(eventfile).exists()
+                df.to_csv('deposit_logs.csv', mode='a', index=False, header=False)
