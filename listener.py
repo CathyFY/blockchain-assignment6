@@ -63,15 +63,14 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
                 'recipient': evt.args['recipient'],
                 'amount': evt.args['amount'],
                 'transactionHash': evt.transactionHash.hex(),
-                'address': evt.address,
-                'date': timestamp
+                'address': evt.address
             }
             rows.append(row)
         # df = pd.DataFrame(rows)
-        df = pd.DataFrame(rows, columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address', 'date'])
+        df = pd.DataFrame(rows, columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address'])
         df.to_csv(eventfile, index=False)
     else:
-        pd.DataFrame(columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address', 'date']).to_csv('deposit_logs.csv', index=False)
+        pd.DataFrame(columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address']).to_csv(eventfile, index=False)
 
         for block_num in range(start_block,end_block+1):
             event_filter = contract.events.Deposit.create_filter(from_block=block_num,to_block=block_num,argument_filters=arg_filter)
@@ -93,5 +92,5 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
             if rows:
                 # df = pd.DataFrame(rows)
                 # write_header = not Path(eventfile).exists()
-                df = pd.DataFrame(rows, columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address', 'date'])
+                df = pd.DataFrame(rows, columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address'])
                 df.to_csv(eventfile, mode='a', index=False, header=False)
