@@ -5,7 +5,7 @@ from pathlib import Path
 import json
 from datetime import datetime
 import pandas as pd
-
+from datetime import datetime
 
 def scan_blocks(chain, start_block, end_block, contract_address, eventfile='deposit_logs.csv'):
     """
@@ -69,7 +69,7 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
             rows.append(row)
         # df = pd.DataFrame(rows)
         df = pd.DataFrame(rows, columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address', 'date'])
-        df.to_csv('deposit_logs.csv', index=False)
+        df.to_csv(eventfile, index=False)
     else:
         pd.DataFrame(columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address', 'date']).to_csv('deposit_logs.csv', index=False)
 
@@ -94,4 +94,4 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
                 # df = pd.DataFrame(rows)
                 # write_header = not Path(eventfile).exists()
                 df = pd.DataFrame(rows, columns=['chain', 'token', 'recipient', 'amount', 'transactionHash', 'address', 'date'])
-                df.to_csv('deposit_logs.csv', mode='a', index=False, header=False)
+                df.to_csv(eventfile, mode='a', index=False, header=False)
