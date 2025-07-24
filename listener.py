@@ -85,8 +85,7 @@ def scan_blocks(chain, start_block, end_block, contract_address, eventfile='depo
                     'recipient': evt.args['recipient'],
                     'amount': evt.args['amount'],
                     'transactionHash': evt.transactionHash.hex(),
-                    'address': evt.address,
-                    'date': timestamp
+                    'address': evt.address
                 }
                 rows.append(row)
             if rows:
